@@ -1,0 +1,357 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Functional Programming for Pure Joy | My Dev Journey</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Matthew Stegall">
+    
+    <meta name="description" content="I recently gave a talk by this name at the Charlotte Node User Group. My goal was to present portions of the Function Programming(FP) paradigm that ar">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/blog/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/blog/img/apple-icon.png">
+    <link rel="apple-touch-icon-precomposed" href="/blog/img/apple-icon.png">
+    
+    <link rel="stylesheet" href="/blog/css/style.css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/blog/"><img src="/blog/img/logo.svg" alt="My Dev Journey" title="My Dev Journey"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/blog/" title="My Dev Journey">My Dev Journey</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/blog/">Home</a></li>
+					
+						<li><a href="/blog/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.matthewstegall.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2017/08/26/Functional-Programming-for-Pure-Joy/" title="Functional Programming for Pure Joy" itemprop="url">Functional Programming for Pure Joy</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://www.matthewstegall.com" title="Matthew Stegall">Matthew Stegall</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2017-08-26T14:41:37.000Z" itemprop="datePublished">2017-08-26</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#A-Brief-History-of-Computation"><span class="toc-number">1.</span> <span class="toc-text">A Brief History of Computation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Theory"><span class="toc-number">2.</span> <span class="toc-text">Theory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pure-Functions-avoiding-state"><span class="toc-number">2.1.</span> <span class="toc-text">Pure Functions (avoiding state)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Immutable-Data-avoiding-mutable-data"><span class="toc-number">2.2.</span> <span class="toc-text">Immutable Data (avoiding mutable data)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Requirements-for-FP"><span class="toc-number">2.3.</span> <span class="toc-text">Requirements for FP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Synchronous-Collections"><span class="toc-number">3.</span> <span class="toc-text">Synchronous Collections</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#map"><span class="toc-number">3.1.</span> <span class="toc-text">map</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#filter"><span class="toc-number">3.2.</span> <span class="toc-text">filter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#reduce"><span class="toc-number">3.3.</span> <span class="toc-text">reduce</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#forEach"><span class="toc-number">3.4.</span> <span class="toc-text">forEach</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Asynchronous-Collections"><span class="toc-number">4.</span> <span class="toc-text">Asynchronous Collections</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-Resources"><span class="toc-number">5.</span> <span class="toc-text">Further Resources</span></a></li></ol>
+		</div>
+		
+		<p>I recently gave a talk by this name at the <a href="https://www.meetup.com/Charlotte-NodeJS-User-Group/" target="_blank" rel="external">Charlotte Node User Group</a>. My goal was to present portions of the Function Programming(FP) paradigm that are easy, high value adds.  Since every new technique has a cost in developer time to learn the technique you need to include that in your consideration whether techniques are right for you project/team. </p>
+<h2 id="A-Brief-History-of-Computation"><a href="#A-Brief-History-of-Computation" class="headerlink" title="A Brief History of Computation"></a>A Brief History of Computation</h2><p>In the 1930’s the ground work of computability theory was being done, two of the people doing this were <a href="https://en.wikipedia.org/wiki/Alan_Turing" target="_blank" rel="external">Alan Turing</a> and <a href="https://en.wikipedia.org/wiki/Alonzo_Church" target="_blank" rel="external">Alonzo Church</a>. Turing created amount many thing the idea of a Turing Machine, a machine that has a tape that it can move back and forth and record information on.  While Turing was creating the Turing Machine, Church was creating the λ-Calculus, the two were eventually shown to be equivalent though they take different approaches.  The λ-Calculus is a stateless way of examining computation based solely on evaluating function. These two concepts show two approaches to computing Imperative(Turing Machine) and Declarative(λ-calculus).</p>
+<h2 id="Theory"><a href="#Theory" class="headerlink" title="Theory"></a>Theory</h2><p>What exactly is Functional programming? </p>
+<p>Functional programming focuses on building the output from a series of function call while avoiding state and mutable data. Lets break that statement down:</p>
+<h3 id="Pure-Functions-avoiding-state"><a href="#Pure-Functions-avoiding-state" class="headerlink" title="Pure Functions (avoiding state)"></a>Pure Functions (avoiding state)</h3><p><em>Pure functions</em> are a constraint in FP that helps avoid state.  To talk about pure functions its helpful to define another term, <em>side effect</em>.  A side effect is simply when a function does something that affects the state of the program that it doesn’t “own”. In addition to the programming state you cannot modify state outside of the system this includes things like database calls and disk access.  A pure function is simply a function with no side effects. Lets look at some examples:</p>
+<figure class="highlight javascript"><figcaption><span>Pure Function</span></figcaption><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">count</span>(<span class="params">current</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> current + <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(count(<span class="number">0</span>)); <span class="comment">// 1</span></div><div class="line"><span class="built_in">console</span>.log(count(<span class="number">0</span>)); <span class="comment">// 1</span></div></pre></td></tr></table></figure>
+<p>This is a pure function because it will return the same value every time it is called with the same argument.</p>
+<figure class="highlight javascript"><figcaption><span>Impure Function</span></figcaption><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> count = <span class="number">0</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">counter</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    count ++;</div><div class="line">    <span class="keyword">return</span> count</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(counter()); <span class="comment">// 1</span></div><div class="line"><span class="built_in">console</span>.log(counter()); <span class="comment">// 2</span></div></pre></td></tr></table></figure>
+<p>This is an example of an impure function because it modifies state that it doesn’t “own” (<code>count</code>).</p>
+<p>Pure functions have several advantages over impure functions:</p>
+<ul>
+<li>Predictable - you know that you will always get the same value for a set of arguments</li>
+<li>Testable - you don’t have to do any setup for your test</li>
+<li>Easier to debug - you don’t have to recreate the application state once you know the problem function</li>
+</ul>
+<h3 id="Immutable-Data-avoiding-mutable-data"><a href="#Immutable-Data-avoiding-mutable-data" class="headerlink" title="Immutable Data (avoiding mutable data)"></a>Immutable Data (avoiding mutable data)</h3><p><em>Immutable data</em> is simply data that doesn’t change.  This is a concept closely tied to pure functions as a pure function will never mutate data that it is passed as that would be a side effect. Enforcing immutable data in your application will make it easier to reason about how the application works as a function call in one place will not affect any function that works on the same piece of data.</p>
+<figure class="highlight javascript"><figcaption><span>Mutable Data</span></figcaption><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getSquares</span>(<span class="params">array</span>) </span>&#123;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; array.length; i += <span class="number">1</span>) &#123;</div><div class="line">    array[i] = array[i] * array[i];</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> array;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(getSquares(nums)); <span class="comment">// [1, 4, 9, 16]</span></div><div class="line"><span class="built_in">console</span>.log(nums); <span class="comment">// [1, 4, 9, 16]</span></div></pre></td></tr></table></figure>
+<p>Here our function replaces each item in the array with its square, now any code further on which expects the original nums array will get the new squared data.</p>
+<figure class="highlight javascript"><figcaption><span>Immutable Data</span></figcaption><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getSquares</span>(<span class="params">array</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> result = [];</div><div class="line"></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; array.length; i += <span class="number">1</span>) &#123;</div><div class="line">    result.push(array[i] * array[i]);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(getSquares(nums)); <span class="comment">// [1, 4, 9, 16]</span></div><div class="line"><span class="built_in">console</span>.log(nums); <span class="comment">// [1, 2, 3, 4]</span></div></pre></td></tr></table></figure>
+<p>By constructing a new array here we have prevented modifying the original array and any other code using the nums array will get the data it expects.</p>
+<p>Immutable data is not built into javascript however the tools you need to work on data in a non-mutating way are available.  <code>Object.assign</code> allows us to create shallow copies of objects which we can then change safely. <code>Array.prototype.slice</code> allows us to create copies of array which we can then safely mutate. To get truly immutable data types you can use a library like <a href="https://facebook.github.io/immutable-js/" target="_blank" rel="external">Immutable.js</a>.</p>
+<h3 id="Requirements-for-FP"><a href="#Requirements-for-FP" class="headerlink" title="Requirements for FP"></a>Requirements for FP</h3><p>In order to be able to take advantage of FP concepts the language must have one critical feature, first-class functions. <em>First-class functions</em> simply means that the language must allow the programmer to use a function anywhere that an expression can be used. The simplest example in javascript is a function expression  i.e. <code>var fn = function(){}</code>.  First class functions are important because they allow us to create higher-order functions.  <em>Higher-order functions</em> are simply functions that either take a function as a parameter or return one as a result, we’ll look at a few of these in the next section.</p>
+<p>One language feature that is not present in most Javascript environments but is useful is <em>tail call optimization</em>. This allows recursive functions to be more efficient but is not required.  It is part of the ES2015 spec but is currently only implemented in Webkit browsers.</p>
+<h2 id="Synchronous-Collections"><a href="#Synchronous-Collections" class="headerlink" title="Synchronous Collections"></a>Synchronous Collections</h2><p>JavaScript contains built in functions for handling arrays inspired by FP called <code>map</code>,<code>filter</code>,<code>reduce</code>, and <code>forEach</code>. We’ll construct these functions so that we know how they work and then we’ll look at the built in versions. Once you’ve mastered these functions there is no need to manually iterate over an array using a for loop. Further more since these functions all return arrays we can conviently chain them together to get more complex behavior.</p>
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><p>The map function takes an array and transforms it to a new array by repeated application of a function to its elements.</p>
+<figure class="highlight javascript"><figcaption><span>Map</span></figcaption><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">map</span>(<span class="params">fn, array</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> result = [];</div><div class="line"></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; array.length; i += <span class="number">1</span>) &#123;</div><div class="line">    result.push(fn(array[i]));</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line">map(<span class="function"><span class="params">x</span> =&gt;</span> x * x, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]) <span class="comment">// [1, 4, 9, 16]</span></div></pre></td></tr></table></figure>
+<p>This ordering of parameters is typical of functional programming as it allows partial application to create reusable map functions.</p>
+<figure class="highlight javascript"><figcaption><span>Partial Application</span></figcaption><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> getSquares = map.bind(<span class="literal">null</span>, x =&gt; x * x)</div><div class="line">getSquares([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]) <span class="comment">// [1, 4, 9, 16]</span></div></pre></td></tr></table></figure>
+<p>The builtin for all of these functions exists on the Array prototype so the call looks a little different</p>
+<figure class="highlight javascript"><figcaption><span>BuiltIn</span></figcaption><table><tr><td class="code"><pre><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>].map(<span class="function"><span class="params">x</span> =&gt;</span> x * x) <span class="comment">// [1, 4, 9, 16]</span></div></pre></td></tr></table></figure>
+<h3 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h3><p>The filter function returns a new array where the members satisfy whatever condition is encoded in the function it is passed.</p>
+<figure class="highlight javascript"><figcaption><span>Filter</span></figcaption><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">filter</span>(<span class="params">fn, array</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> result = [];</div><div class="line"></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; array.length; i += <span class="number">1</span>) &#123;</div><div class="line">    <span class="keyword">if</span> (fn(array[i])) &#123;</div><div class="line">      result.push(array[i]);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line">filter(<span class="function"><span class="params">x</span> =&gt;</span> x % <span class="number">2</span> === <span class="number">1</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]) <span class="comment">// [1, 3, 5]</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><figcaption><span>BuiltIn</span></figcaption><table><tr><td class="code"><pre><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>].filter(<span class="function"><span class="params">x</span> =&gt;</span> x % <span class="number">2</span> === <span class="number">1</span>) <span class="comment">// [1, 3, 5]</span></div></pre></td></tr></table></figure>
+<h3 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h3><p>The reduce function builds up a single value by repeatedly applying the function it is passed to an array.</p>
+<figure class="highlight javascript"><figcaption><span>Reduce</span></figcaption><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">reduce</span>(<span class="params">fn, initial, array</span>) </span>&#123;</div><div class="line">  <span class="keyword">let</span> acc = initial;</div><div class="line"></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; array.length; i += <span class="number">1</span>) &#123;</div><div class="line">    acc = fn(acc, array[i]);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> acc;</div><div class="line">&#125;</div><div class="line"></div><div class="line">reduce(<span class="function">(<span class="params">x,y</span>) =&gt;</span> x + y, <span class="number">0</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]) <span class="comment">// 10</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><figcaption><span>BuiltIn </span></figcaption><table><tr><td class="code"><pre><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>].reduce(<span class="function">(<span class="params">x,y</span>) =&gt;</span> x + y, <span class="number">0</span>) <span class="comment">// 10</span></div></pre></td></tr></table></figure>
+<h3 id="forEach"><a href="#forEach" class="headerlink" title="forEach"></a>forEach</h3><p>The forEach function is a bit different as it doesn’t have much of a use in FP but allows us to nicely iterate over an array in order to cause side-effects with similar syntax to the other array methods.</p>
+<figure class="highlight javascript"><figcaption><span>forEach</span></figcaption><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">forEach</span>(<span class="params">fn, array</span>) </span>&#123;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; array.length; i += <span class="number">1</span>) &#123;</div><div class="line">    fn(array[i]);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">forEach(<span class="built_in">console</span>.log, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]) <span class="comment">// Logs 1/n 2/n 3/n 4/n</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><figcaption><span>BuiltIn</span></figcaption><table><tr><td class="code"><pre><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>].forEach(<span class="built_in">console</span>.log) <span class="comment">// Logs 1/n 2/n 3/n 4/n</span></div></pre></td></tr></table></figure>
+<h2 id="Asynchronous-Collections"><a href="#Asynchronous-Collections" class="headerlink" title="Asynchronous Collections"></a>Asynchronous Collections</h2><p>The functions discussed above are very helpful when working in a totally synchronous environment but JavaScript is rarely ever a completely synchronous environment.  For using the above functions with promises we can use the library <a href="http://bluebirdjs.com/docs/getting-started.html" target="_blank" rel="external">bluebird.js</a>.  This allows us to return promises from our iteration functions.  </p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="built_in">Promise</span> = <span class="built_in">require</span>(<span class="string">"bluebird"</span>);</div><div class="line"></div><div class="line"><span class="keyword">const</span> values = [<span class="string">"1"</span>, <span class="string">"2"</span>, <span class="string">"3"</span>, <span class="string">"4"</span>, <span class="string">"5"</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getValue</span>(<span class="params">value</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> setTimeout(resolve(value), <span class="number">1000</span>));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> sum = <span class="function">(<span class="params">a, b</span>) =&gt;</span> a + b;</div><div class="line"><span class="keyword">const</span> isEven = <span class="function"><span class="params">num</span> =&gt;</span> !(num % <span class="number">2</span>);</div><div class="line"></div><div class="line"><span class="keyword">const</span> fileData = <span class="built_in">Promise</span>.map(values, getValue)</div><div class="line">  .map(<span class="function"><span class="params">data</span> =&gt;</span> <span class="built_in">parseInt</span>(data))</div><div class="line">  .filter(isEven)</div><div class="line">  .reduce(sum)</div><div class="line">  .then(<span class="built_in">console</span>.log); <span class="comment">// Logs 6 to the console</span></div></pre></td></tr></table></figure>
+<h2 id="Further-Resources"><a href="#Further-Resources" class="headerlink" title="Further Resources"></a>Further Resources</h2><p>The git repo for my talk can be found <a href="https://github.com/mStegall/functional-programming-for-pure-joy" target="_blank" rel="external">here</a>.</p>
+<p>For a FP centric library take a look at <a href="http://ramdajs.com/" target="_blank" rel="external">Ramda</a>.</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/Javascript/">Javascript</a><a href="/blog/tags/Functional-Programming/">Functional Programming</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/Javascript/">Javascript</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.matthewstegall.com/2017/08/26/Functional-Programming-for-Pure-Joy/" data-title="Functional Programming for Pure Joy | My Dev Journey" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#A-Brief-History-of-Computation"><span class="toc-number">1.</span> <span class="toc-text">A Brief History of Computation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Theory"><span class="toc-number">2.</span> <span class="toc-text">Theory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pure-Functions-avoiding-state"><span class="toc-number">2.1.</span> <span class="toc-text">Pure Functions (avoiding state)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Immutable-Data-avoiding-mutable-data"><span class="toc-number">2.2.</span> <span class="toc-text">Immutable Data (avoiding mutable data)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Requirements-for-FP"><span class="toc-number">2.3.</span> <span class="toc-text">Requirements for FP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Synchronous-Collections"><span class="toc-number">3.</span> <span class="toc-text">Synchronous Collections</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#map"><span class="toc-number">3.1.</span> <span class="toc-text">map</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#filter"><span class="toc-number">3.2.</span> <span class="toc-text">filter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#reduce"><span class="toc-number">3.3.</span> <span class="toc-text">reduce</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#forEach"><span class="toc-number">3.4.</span> <span class="toc-text">forEach</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Asynchronous-Collections"><span class="toc-number">4.</span> <span class="toc-text">Asynchronous Collections</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-Resources"><span class="toc-number">5.</span> <span class="toc-text">Further Resources</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/blog/categories/Javascript/" title="Javascript">Javascript<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/blog/tags/Functional-Programming/" title="Functional Programming">Functional Programming<sup>1</sup></a></li>
+		
+			<li><a href="/blog/tags/Javascript/" title="Javascript">Javascript<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/blog/tags/Functional-Programming/" style="font-size: 10px;">Functional Programming</a> <a href="/blog/tags/Javascript/" style="font-size: 10px;">Javascript</a>
+    </div>
+  </div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/blog/archives">Archives</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/08/">August 2017</a><span class="archive-list-count">1</span></li></ul>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hey I&#39;m Matt Stegall and you&#39;re reading my blog <br/>
+			I&#39;m a full stack developer who loves both theory and practicality</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		
+		
+		<a href="https://github.com/mStegall" target="_blank" title="github"></a>
+		
+		
+		
+        <a href="https://www.linkedin.com/in/m-stegall" target="_blank" title="linkedin"></a>
+        
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2017 
+		
+		<a href="http://www.matthewstegall.com" target="_blank" title="Matthew Stegall">Matthew Stegall</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/blog/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>Scan for link</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>
