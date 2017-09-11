@@ -1,0 +1,347 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Lambda Calculus in Javascript | My Dev Journey</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Matthew Stegall">
+    
+    <meta name="description" content="Lambda calculus is a description of computation that is functionally equivalent to Alan Turing’s Turing Machines, though it works a bit differently. I">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/apple-icon.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/apple-icon.png">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="My Dev Journey" title="My Dev Journey"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="My Dev Journey">My Dev Journey</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/blog/">Home</a></li>
+					
+						<li><a href="/blog/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.matthewstegall.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/09/10/lambda-calcus-in-js/" title="Lambda Calculus in Javascript" itemprop="url">Lambda Calculus in Javascript</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://www.matthewstegall.com" title="Matthew Stegall">Matthew Stegall</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2017-09-10T04:07:57.000Z" itemprop="datePublished">2017-09-10</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Lambda-Calculus-Basics"><span class="toc-number">1.</span> <span class="toc-text">Lambda Calculus Basics</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Executing-Statements"><span class="toc-number">2.</span> <span class="toc-text">Executing Statements</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Boolean-Values"><span class="toc-number">3.</span> <span class="toc-text">Boolean Values</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conditionals"><span class="toc-number">4.</span> <span class="toc-text">Conditionals</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Logical-Operations"><span class="toc-number">5.</span> <span class="toc-text">Logical Operations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-does-this-matter"><span class="toc-number">6.</span> <span class="toc-text">Why does this matter?</span></a></li></ol>
+		</div>
+		
+		<p>Lambda calculus is a description of computation that is functionally equivalent to Alan Turing’s Turing Machines, though it works a bit differently. It only includes functions and while this may seem limiting at first we’ll show some basics of how you can encode boolean logic in lambda calculus.</p>
+<p>Much of my inspiration for this post come from the book <a href="https://www.amazon.com/Introduction-Functional-Programming-Calculus-Mathematics-ebook/dp/B00CWR4USM/ref=sr_1_5?ie=UTF8&amp;qid=1505088825&amp;sr=8-5&amp;keywords=introduction+functional" target="_blank" rel="external">An Introduction to Functional Programming Through Lambda</a>. This is a great introductory book to lambda calculus for those that find the subject interesting.  It starts from the very fundamentals and builds all the way up to a typed langauage with many of the functional tools we’ve come to expect.</p>
+<h2 id="Lambda-Calculus-Basics"><a href="#Lambda-Calculus-Basics" class="headerlink" title="Lambda Calculus Basics"></a>Lambda Calculus Basics</h2><p>The basic unit of lambda calculus is a function. The simplest of those functions is the identity function and it looks like this: (&lambda;x.x). The x before the dot indicates what we refer to in javascript as a parameter while the x after the dot is like a function body. The equivalent javascript looks like this:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> identity = <span class="function"><span class="params">x</span> =&gt;</span> x</div></pre></td></tr></table></figure>
+<h2 id="Executing-Statements"><a href="#Executing-Statements" class="headerlink" title="Executing Statements"></a>Executing Statements</h2><p>As a tool for our expirements in lambda calculus its useful have a function that simply logs a function name so we can see our results.</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> execute = <span class="function"><span class="params">fn</span> =&gt;</span> <span class="built_in">console</span>.log(fn.name)</div></pre></td></tr></table></figure>
+<p>When you call that on the identify function we’ve declared above it should simply log <code>identity</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">execute(identity) <span class="comment">// identity</span></div></pre></td></tr></table></figure>
+<h2 id="Boolean-Values"><a href="#Boolean-Values" class="headerlink" title="Boolean Values"></a>Boolean Values</h2><p>To start off we need to define our boolean values, which aren’t given to us to start with. You could choose another way to define these but you’ll see that these definitions make constructing more advanced functions quite simple. We simply say that true is the function that returns its first argument and false is the function that returns its second argument. In lambda calculus these would be wrtten as (&lambda;x.&lambda;y.x) and (&lambda;x.&lambda;y.y) respectively. The functions are called myTrue and myFalse simply because javascript doesn’t let us redfine those terms.</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> myTrue = <span class="function">(<span class="params">first, second</span>) =&gt;</span> first</div><div class="line"><span class="keyword">const</span> myFalse = <span class="function">(<span class="params">first, second</span>) =&gt;</span> second</div></pre></td></tr></table></figure>
+<h2 id="Conditionals"><a href="#Conditionals" class="headerlink" title="Conditionals"></a>Conditionals</h2><p>The first thing we need in a program is the ability to branch based on some value, this is what we usually see as an <code>if</code> statement.  To do this we can take advantage of the fact that our boolean values are defined as functions with two parameters, much the how an if-else is defined by its two code blocks. Consider these two blocks of code:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// myTrue </span></div><div class="line"><span class="built_in">console</span>.log(myTrue(<span class="number">3</span>,<span class="number">5</span>)) <span class="comment">// 3</span></div><div class="line"></div><div class="line"><span class="comment">// if-else </span></div><div class="line"><span class="keyword">const</span> ifElse = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">if</span> (<span class="literal">true</span>) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="number">3</span>;</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="number">5</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(ifElse()) <span class="comment">// 3</span></div></pre></td></tr></table></figure>
+<p>These two statements do nearly the same thing. The way we can use this is by creating a function that takes our two branches and allows us to apply the condition later.</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> cond = <span class="function">(<span class="params">a, b</span>) =&gt;</span> pred =&gt; pred(a, b)</div><div class="line"></div><div class="line"><span class="comment">// example use</span></div><div class="line">cond(<span class="number">3</span>,<span class="number">5</span>)(myTrue) <span class="comment">// 3</span></div><div class="line">cond(<span class="number">3</span>,<span class="number">5</span>)(myFalse) <span class="comment">// 5</span></div></pre></td></tr></table></figure>
+<p>The equivalent lambda calculus expression would look like this: (&lambda;a.&lambda;b.&lambda;bool.(bool a b)).</p>
+<h2 id="Logical-Operations"><a href="#Logical-Operations" class="headerlink" title="Logical Operations"></a>Logical Operations</h2><p>Since we now have conditionals it very easy to start defining our basic logic functions like not, and, and or. I’ve provided some definitions below and some examples of how they might be called. Think about how you might would write these functions normally and how that maps to our lambda calculus version.</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> not = cond(myFalse, myTrue)</div><div class="line"><span class="keyword">const</span> and = <span class="function">(<span class="params">b</span>) =&gt;</span> cond(b,myFalse)</div><div class="line"><span class="keyword">const</span> or = <span class="function">(<span class="params">b</span>) =&gt;</span> cond(myTrue, b)</div><div class="line"></div><div class="line"><span class="keyword">const</span> xor = <span class="function">(<span class="params">a,b</span>) =&gt;</span> and(or(a,b), not(and(a,b)))</div><div class="line"></div><div class="line">execute(not(myTrue)) <span class="comment">// myFalse</span></div><div class="line">execute(and(myTrue)(myFalse)) <span class="comment">// myFalse</span></div><div class="line">execute(or(myTrue)(myFalse)) <span class="comment">// myTrue</span></div></pre></td></tr></table></figure>
+<p>We can also use a process called &Beta;-reduction, which is basically a fancy term for substitution to make our expressions simpler.</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> not = <span class="function">(<span class="params">input</span>) =&gt;</span> input(myFalse, myTrue)</div><div class="line"><span class="keyword">const</span> and = <span class="function">(<span class="params">a, b</span>) =&gt;</span> a(b, myFalse)</div><div class="line"><span class="keyword">const</span> or = <span class="function">(<span class="params">a, b</span>) =&gt;</span> a(myTrue, b);</div><div class="line"></div><div class="line"><span class="keyword">const</span> xor = <span class="function">(<span class="params">a,b</span>) =&gt;</span> and(or(a,b), not(and(a,b)))</div></pre></td></tr></table></figure>
+<h2 id="Why-does-this-matter"><a href="#Why-does-this-matter" class="headerlink" title="Why does this matter?"></a>Why does this matter?</h2><p>Lambda calculus like isn’t practical at all in Javascript I’m not advocating anyone try programming like this as it is beyond useless in an envirnoment that is so heavy with state.  I do think there is some value in learning this as it helps open you up to knew ways of thinking about things and gives some context for just how much theory exists behind what we do every day.</p>
+<p>If like me you find this interesting I would highly recommend the book linked at the top of this post as it gives a good guided tour of building up a language from basic parts. The highlight of the book is how recursion(self-referencing) is accomplished in lambda calculus and all the doors it opens. It’s certainly not an exhaustive book and can be read in about a week but I found it very enjoyable.</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.matthewstegall.com/2017/09/10/lambda-calcus-in-js/" data-title="Lambda Calculus in Javascript | My Dev Journey" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/08/26/Functional-Programming-for-Pure-Joy/"  title="Functional Programming for Pure Joy">
+ <strong>NEXT:</strong><br/> 
+ <span>Functional Programming for Pure Joy
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Lambda-Calculus-Basics"><span class="toc-number">1.</span> <span class="toc-text">Lambda Calculus Basics</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Executing-Statements"><span class="toc-number">2.</span> <span class="toc-text">Executing Statements</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Boolean-Values"><span class="toc-number">3.</span> <span class="toc-text">Boolean Values</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conditionals"><span class="toc-number">4.</span> <span class="toc-text">Conditionals</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Logical-Operations"><span class="toc-number">5.</span> <span class="toc-text">Logical Operations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-does-this-matter"><span class="toc-number">6.</span> <span class="toc-text">Why does this matter?</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Javascript/" title="Javascript">Javascript<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Functional-Programming/" title="Functional Programming">Functional Programming<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Javascript/" title="Javascript">Javascript<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Functional-Programming/" style="font-size: 10px;">Functional Programming</a> <a href="/tags/Javascript/" style="font-size: 10px;">Javascript</a>
+    </div>
+  </div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">Archives</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">1</span></li></ul>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hey I&#39;m Matt Stegall and you&#39;re reading my blog <br/>
+			I&#39;m a full stack developer who loves both theory and practicality</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		
+		
+		<a href="https://github.com/mStegall" target="_blank" title="github"></a>
+		
+		
+		
+        <a href="https://www.linkedin.com/in/m-stegall" target="_blank" title="linkedin"></a>
+        
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2017 
+		
+		<a href="http://www.matthewstegall.com" target="_blank" title="Matthew Stegall">Matthew Stegall</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>Scan for link</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-105399536-1', '');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
