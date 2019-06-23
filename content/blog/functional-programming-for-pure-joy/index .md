@@ -24,7 +24,7 @@ Functional programming focuses on building the output from a series of function 
 
 *Pure functions* are a constraint in FP that helps avoid state.  To talk about pure functions its helpful to define another term, *side effect*.  A side effect is simply when a function does something that affects the state of the program that it doesn't "own". In addition to the programming state you cannot modify state outside of the system this includes things like database calls and disk access.  A pure function is simply a function with no side effects. Lets look at some examples:
 
-``` javascript Pure Function
+``` javascript
 function count(current) {
   return current + 1;
 }
@@ -35,7 +35,7 @@ console.log(count(0)); // 1
 
 This is a pure function because it will return the same value every time it is called with the same argument.
 
-``` javascript Impure Function
+``` javascript
 let count = 0;
 
 function counter(){
@@ -58,7 +58,7 @@ Pure functions have several advantages over impure functions:
 
 *Immutable data* is simply data that doesn't change.  This is a concept closely tied to pure functions as a pure function will never mutate data that it is passed as that would be a side effect. Enforcing immutable data in your application will make it easier to reason about how the application works as a function call in one place will not affect any function that works on the same piece of data.
 
-``` javascript Mutable Data
+``` javascript
 const nums = [1, 2, 3, 4];
 
 function getSquares(array) {
@@ -74,7 +74,7 @@ console.log(nums); // [1, 4, 9, 16]
 ```
 Here our function replaces each item in the array with its square, now any code further on which expects the original nums array will get the new squared data.
 
-``` javascript Immutable Data
+``` javascript
 const nums = [1, 2, 3, 4];
 
 function getSquares(array) {
@@ -108,7 +108,7 @@ JavaScript contains built in functions for handling arrays inspired by FP called
 
 The map function takes an array and transforms it to a new array by repeated application of a function to its elements.
 
-``` javascript Map
+``` javascript
 function map(fn, array) {
   const result = [];
 
@@ -124,14 +124,14 @@ map(x => x * x, [1, 2, 3, 4]) // [1, 4, 9, 16]
 
 This ordering of parameters is typical of functional programming as it allows partial application to create reusable map functions.
 
-``` javascript Partial Application
+``` javascript
 const getSquares = map.bind(null, x => x * x)
 getSquares([1, 2, 3, 4]) // [1, 4, 9, 16]
 ```
 
 The builtin for all of these functions exists on the Array prototype so the call looks a little different
 
-``` javascript BuiltIn
+``` javascript
 [1, 2, 3, 4].map(x => x * x) // [1, 4, 9, 16]
 ```
 
@@ -139,7 +139,7 @@ The builtin for all of these functions exists on the Array prototype so the call
 
 The filter function returns a new array where the members satisfy whatever condition is encoded in the function it is passed.
 
-``` javascript Filter
+``` javascript 
 function filter(fn, array) {
   const result = [];
 
@@ -155,7 +155,7 @@ function filter(fn, array) {
 filter(x => x % 2 === 1, [1, 2, 3, 4, 5]) // [1, 3, 5]
 ```
 
-``` javascript BuiltIn
+``` javascript
 [1, 2, 3, 4, 5].filter(x => x % 2 === 1) // [1, 3, 5]
 ```
 
