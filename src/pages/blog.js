@@ -10,13 +10,14 @@ class BlogIndex extends React.Component {
   render() {
     const { data } = this.props
     // const siteTitle = data.site.siteMetadata.title
-    const posts = data.allMarkdownRemark.edges
+    const posts = data.allFile.nodes.map(node => node.childMarkdownRemark).filter(i=>i)
+    // const posts = data.allMarkdownRemark.edges
 
     return (
       <Layout location={this.props.location} title={"Dev Blog"}>
         <SEO title="All posts" />
         <Bio />
-        {posts.map(({ node }) => {
+        {posts.map(( node) => {
           const title = node.frontmatter.title || node.fields.slug
           return (
             <div key={node.fields.slug}>
@@ -25,7 +26,10 @@ class BlogIndex extends React.Component {
                   marginBottom: rhythm(1 / 4),
                 }}
               >
-                <Link style={{ boxShadow: `none` }} to={`/blog/${node.fields.slug}`}>
+                <Link
+                  style={{ boxShadow: `none` }}
+                  to={`/blog/${node.fields.slug}`}
+                >
                   {title}
                 </Link>
               </h3>
@@ -55,6 +59,26 @@ export const pageQuery = graphql`
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {
+          excerpt
+          fields {
+            slug
+          }
+          frontmatter {
+            date(formatString: "MMMM DD, YYYY")
+            title
+            description
+          }
+        }
+      }
+    }
+    allFile(filter: { sourceInstanceName: { eq: "blog" } }) {
+      nodes {
+        id
+        relativePath
+        children {
+          id
+        }
+        childMarkdownRemark {
           excerpt
           fields {
             slug

@@ -7,23 +7,25 @@ exports.createPages = ({ graphql, actions }) => {
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
   return graphql(
     `
-      {
-        allMarkdownRemark(
-          sort: { fields: [frontmatter___date], order: DESC }
-          limit: 1000
-        ) {
-          edges {
-            node {
-              fields {
-                slug
-              }
-              frontmatter {
-                title
-              }
+    {
+      allFile(filter: {sourceInstanceName: {eq: "blog"}}) {
+        nodes {
+          id
+          relativePath
+          children {
+            id
+          }
+          childMarkdownRemark {
+            fields {
+              slug
+            }
+            frontmatter {
+              title
             }
           }
         }
       }
+    }    
     `
   ).then(result => {
     if (result.errors) {
@@ -31,17 +33,17 @@ exports.createPages = ({ graphql, actions }) => {
     }
 
     // Create blog posts pages.
-    const posts = result.data.allMarkdownRemark.edges
+    const posts = result.data.allFile.nodes.map(node => node.childMarkdownRemark).filter(i=>i)
 
     posts.forEach((post, index) => {
-      const previous = index === posts.length - 1 ? null : posts[index + 1].node
-      const next = index === 0 ? null : posts[index - 1].node
+      const previous = index === posts.length - 1 ? null : posts[index + 1]
+      const next = index === 0 ? null : posts[index - 1]
 
       createPage({
-        path: `/blog/${post.node.fields.slug}`,
+        path: `/blog${post.fields.slug}`,
         component: blogPost,
         context: {
-          slug: post.node.fields.slug,
+          slug: post.fields.slug,
           previous,
           next,
         },
